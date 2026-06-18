@@ -22,3 +22,27 @@ dnf5 install -y tmux
 #### Example for enabling a System Unit File
 
 systemctl enable podman.socket
+
+#### Myself modifycations
+
+# 替换flathub源
+cat <<EOF > /etc/flatpak/remotes.d/flathub.flatpakrepo
+[Flatpak Repo]
+Title=Flathub
+Url=https://mirror.sjtu.edu.cn/flathub/
+Homepage=https://flathub.org/
+Comment=Central repository of Flatpak applications
+Description=Central repository of Flatpak applications
+Icon=https://mirror.sjtu.edu.cn/flathub/logo.svg
+EOF
+chmod 644 /etc/flatpak/remotes.d/flathub.flatpakrepo
+
+# 替换Homebrew源
+cat <<'EOF' > /etc/profile.d/homebrew-mirror.sh
+export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
+export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
+export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
+export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
+export HOMEBREW_INSTALL_FROM_API=1
+EOF
+chmod 644 /etc/profile.d/homebrew-mirror.sh
