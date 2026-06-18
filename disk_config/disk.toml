@@ -1,3 +1,6 @@
+[distro]
+name = "bluefin"
+
 [[customizations.filesystem]]
 mountpoint = "/"
 minsize = "20 GiB"
