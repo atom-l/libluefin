@@ -52,7 +52,7 @@ EOF
 chmod 644 /etc/profile.d/homebrew-mirror.sh
 
 # 修改镜像信息
-IMAGE_INFO = $(cat /usr/share/ublue-os/image-info.json | jq '
+IMAGE_INFO=$(cat /usr/share/ublue-os/image-info.json | jq '
     ."image-name" = "libluefin"
     | ."image-vendor" = "atom-l"
     | ."image-ref" = "ostree-image-signed:docker://ghcr.io/atom-l/libluefin"
