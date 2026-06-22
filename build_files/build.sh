@@ -49,3 +49,13 @@ export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bot
 export HOMEBREW_INSTALL_FROM_API=1
 EOF
 chmod 644 /etc/profile.d/homebrew-mirror.sh
+
+# 修改镜像信息
+IMAGE_INFO = $(cat /usr/share/ublue-os/image-info.json | jq '
+    ."image-name" = "libluefin"
+    | ."image-vendor" = "atom-l"
+    | ."image-ref" = "ostree-image-signed:docker://ghcr.io/atom-l/libluefin"
+    | ."image-tag" = "latest"
+    | ."os-category" = "workspace"
+')
+echo "$IMAGE_INFO" > /usr/share/ublue-os/image-info.json
