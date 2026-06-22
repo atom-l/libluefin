@@ -17,7 +17,7 @@ gamemode:
         echo "Already in gamemode."
         exit 0
     else
-        gum confirm "Would you like to disable game mode?" || exit 0
+        gum confirm "Would you like to enable game mode?" || exit 0
     fi
     proxy_args=()
     proxy_http="${HTTP_PROXY:-${http_proxy:-}}"
