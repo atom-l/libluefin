@@ -8,57 +8,6 @@ bluefin-cli:
     @ublue-bling
     brew bundle --file=/usr/share/ublue-os/homebrew/cli.Brewfile
 
-# alias for toggle-devmode
-devmode:
-    @ujust toggle-devmode
-
-# Toggle between Bluefin and the Developer Experience
-[group('System')]
-toggle-devmode:
-    #!/usr/bin/env bash
-    set -e
-    IMAGE_INFO_FILE="${IMAGE_INFO_FILE:-/usr/share/ublue-os/image-info.json}"
-    IMAGE_NAME="$(jq -rc '."image-name"' "${IMAGE_INFO_FILE}")"
-    IMAGE_REF="$(jq -rc '."image-ref"' "${IMAGE_INFO_FILE}" | sed "s/.*ghcr/ghcr/")"
-    CURRENT_IMAGE="${IMAGE_REF}:$(jq -rc '."image-tag"' "${IMAGE_INFO_FILE}")"
-    IMAGE_BASE_NAME="$(cut -f1 -d\- <<< "${IMAGE_NAME}")"
-    proxy_args=()
-    proxy_http="${HTTP_PROXY:-${http_proxy:-}}"
-    [[ -n "$proxy_http" ]] && proxy_args+=("HTTP_PROXY=$proxy_http" "http_proxy=$proxy_http")
-    proxy_https="${HTTPS_PROXY:-${https_proxy:-}}"
-    [[ -n "$proxy_https" ]] && proxy_args+=("HTTPS_PROXY=$proxy_https" "https_proxy=$proxy_https")
-    proxy_no="${NO_PROXY:-${no_proxy:-}}"
-    [[ -n "$proxy_no" ]] && proxy_args+=("NO_PROXY=$proxy_no" "no_proxy=$proxy_no")
-    set +e
-
-    if grep -q -E -e "dx$" <<< "${IMAGE_NAME}" ; then
-        gum confirm "Would you like to disable developer mode?" || exit 0
-        echo "Rebasing to a non developer image"
-        NEW_IMAGE="$(sed "s/\-dx//" <<< $CURRENT_IMAGE)"
-        if [[ ${#proxy_args[@]} -eq 0 ]]; then
-            pkexec bootc switch --enforce-container-sigpolicy "${NEW_IMAGE}"
-        else
-            pkexec env "${proxy_args[@]}" bootc switch --enforce-container-sigpolicy "${NEW_IMAGE}"
-        fi
-        exit 0
-    fi
-
-    gum confirm "Would you like to enable developer mode?" || exit 0
-    echo "Rebasing to a developer image"
-    NEW_IMAGE="$(sed "s/${IMAGE_BASE_NAME}/${IMAGE_BASE_NAME}-dx/" <<< "${CURRENT_IMAGE}")"
-    if [[ ${#proxy_args[@]} -eq 0 ]]; then
-        pkexec bootc switch --enforce-container-sigpolicy "${NEW_IMAGE}"
-    else
-        pkexec env "${proxy_args[@]}" bootc switch --enforce-container-sigpolicy "${NEW_IMAGE}"
-    fi
-    if gum confirm "Do you want to also install the default development flatpaks?" ; then
-        ADD_DEVMODE=1 ujust install-system-flatpaks 0 1
-    fi
-    if gum confirm "Do you want to install extra monospace fonts?" ; then
-        brew bundle install --file=/usr/share/ublue-os/homebrew/fonts.Brewfile
-    fi
-    echo "Use ujust dx-group to add your user to the correct groups and complete the installation after rebooting into the development image"
-
 # Rush B!!!
 [group('System')]
 goto-gamemode:
@@ -101,22 +50,15 @@ dx-group:
 
 # Install system flatpaks for rebasers
 [group('System')]
-install-system-flatpaks $confirm="1" $dx_only="0":
+install-system-flatpaks:
     #!/usr/bin/env bash
-    if [[ "$(jq '."image-flavor"' /usr/share/ublue-os/image-info.json)" =~ dx ]] ; then
-        ADD_DEVMODE="${ADD_DEVMODE:-1}"
-    fi
-    if [ "${ADD_DEVMODE:-0}" == "1" ] ; then
-        if [ "$confirm" != 0 ] ; then
-            gum confirm "Install development flatpaks?" || exit 0
-        fi
-        brew bundle --file="${TARGET_FLATPAK_FILE:-/usr/share/ublue-os/homebrew/system-dx-flatpaks.Brewfile}"
-    fi
-    [ "$dx_only" == 1 ] && exit 0
-    if [ "$confirm" != 0 ] ; then
-        gum confirm "Install system flatpaks?" || exit 0
-    fi
+    gum confirm "Install development flatpaks?" || exit 0
+    brew bundle --file="${TARGET_FLATPAK_FILE:-/usr/share/ublue-os/homebrew/system-dx-flatpaks.Brewfile}"
+    gum confirm "Install system flatpaks?" || exit 0
     brew bundle --file="${TARGET_FLATPAK_FILE:-/usr/share/ublue-os/homebrew/system-flatpaks.Brewfile}"
+    if gum confirm "Do you want to install extra monospace fonts?" ; then
+        brew bundle install --file=/usr/share/ublue-os/homebrew/fonts.Brewfile
+    fi
 
 # Install default system flatpaks (alias for install-system-flatpaks)
 
