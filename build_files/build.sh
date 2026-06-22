@@ -33,6 +33,7 @@ systemctl enable podman.socket
 flatpak remote-delete flathub
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak remote-modify flathub --url=https://mirrors.cernet.edu.cn/flathub
+flatpak remote-add --title "Fedora Flatpaks" fedora oci+https://registry.fedoraproject.org
 
 # 替换Homebrew源
 cat <<'EOF' > /etc/profile.d/homebrew-mirror.sh
