@@ -28,9 +28,9 @@ gamemode:
     [[ -n "$proxy_no" ]] && proxy_args+=("NO_PROXY=$proxy_no" "no_proxy=$proxy_no")
     set +e
     if [[ ${#proxy_args[@]} -eq 0 ]]; then
-        pkexec bootc switch ghcr.io/ublue-os/bazzite-nvidia-open:stable --apply
+        pkexec bootc switch ghcr.io/atom-l/libazzite:latest --apply
     else
-        pkexec env "${proxy_args[@]}" bootc switch ghcr.io/ublue-os/bazzite-nvidia-open:stable --apply
+        pkexec env "${proxy_args[@]}" bootc switch ghcr.io/atom-l/libazzite:latest --apply
     fi
 
 # Configure docker,incus-admin,libvirt, container manager, serial permissions
