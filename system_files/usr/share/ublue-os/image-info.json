@@ -1,0 +1,10 @@
+{
+  "image-name": "libluefin",
+  "image-flavor": "nvidia-open",
+  "image-vendor": "atom-l",
+  "image-ref": "ostree-image-signed:docker://ghcr.io/atom-l/libluefin:latest",
+  "image-tag":"stable",
+  "base-image-name": "bluefin-dx-nvidia-open",
+  "fedora-version": "44",
+  "os-category": "workspace"
+}
