@@ -30,16 +30,8 @@ systemctl enable podman.socket
 #### Myself modifycations
 
 # 替换flathub源
-cat <<EOF > /etc/flatpak/remotes.d/flathub.flatpakrepo
-[Flatpak Repo]
-Title=Flathub
-Url=https://mirror.sjtu.edu.cn/flathub/
-Homepage=https://flathub.org/
-Comment=Central repository of Flatpak applications
-Description=Central repository of Flatpak applications
-Icon=https://mirror.sjtu.edu.cn/flathub/logo.svg
-EOF
-chmod 644 /etc/flatpak/remotes.d/flathub.flatpakrepo
+flatpak remote-delete flathub
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 # 替换Homebrew源
 cat <<'EOF' > /etc/profile.d/homebrew-mirror.sh
