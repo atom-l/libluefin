@@ -10,9 +10,15 @@ bluefin-cli:
 
 # Rush B!!!
 [group('System')]
-goto-gamemode:
+gamemode:
     #!/usr/bin/env bash
     set -e
+    if [[ "$(jq '."os-category"' /usr/share/ublue-os/image-info.json)" == "gamespace" ]] ; then
+        echo "Already in gamemode."
+        exit 0
+    else
+        gum confirm "Install development flatpaks?" || exit 0
+    fi
     proxy_args=()
     proxy_http="${HTTP_PROXY:-${http_proxy:-}}"
     [[ -n "$proxy_http" ]] && proxy_args+=("HTTP_PROXY=$proxy_http" "http_proxy=$proxy_http")
