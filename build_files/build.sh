@@ -32,6 +32,7 @@ systemctl enable podman.socket
 # 替换flathub源
 flatpak remote-delete flathub
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak remote-modify flathub --url=https://mirrors.cernet.edu.cn/flathub
 
 # 替换Homebrew源
 cat <<'EOF' > /etc/profile.d/homebrew-mirror.sh
