@@ -57,3 +57,15 @@ IMAGE_INFO=$(cat /usr/share/ublue-os/image-info.json | jq '
     | ."os-category" = "workspace"
 ')
 echo "$IMAGE_INFO" > /usr/share/ublue-os/image-info.json
+
+# 安装k8s相关的管理工具
+cat <<EOF >> /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://pkgs.k8s.io/core:/stable:/v1.36/rpm/
+enabled=1
+gpgcheck=1
+gpgkey=https://pkgs.k8s.io/core:/stable:/v1.36/rpm/repodata/repomd.xml.key
+exclude=kubelet kubeadm kubectl cri-tools kubernetes-cni
+EOF
+yum install -y kubeadm kubectl --disableexcludes=kubernetes
