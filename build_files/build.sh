@@ -34,7 +34,7 @@ systemctl enable podman.socket
 #### Myself modifycations
 
 # 将图标主题设置为Papirus
-cat <<'EOF' > /usr/share/glib-2.0/schemas/zz0-bluefin-modifications.gschema.override
+cat <<'EOF' >> /usr/share/glib-2.0/schemas/zz0-bluefin-modifications.gschema.override
 # Set default icon theme
 [org.gnome.desktop.interface]
 icon-theme='Papirus'
