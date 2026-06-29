@@ -16,7 +16,6 @@ cp -avf "/ctx/system_files"/. /
 dnf5 install -y tmux
 dnf5 install -y jq
 dnf5 install -y yq
-dnf5 install -y waydroid
 dnf5 install -y papirus-icon-theme
 dnf5 install -y butane
 
