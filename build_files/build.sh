@@ -78,17 +78,7 @@ EOF
 
 yum install -y kubeadm kubectl
 
-#安装tabby
-TABBY_LATEST_URL=$(curl -s https://api.github.com/repos/Eugeny/tabby/releases/latest | jq -r '.assets[] | select(.name | endswith("linux-x64.rpm")) | .browser_download_url')
-curl -L "$TABBY_LATEST_URL" -o /tmp/tabby.rpm
-if [ -L /opt ]; then
-    mv /opt /opt.bak
-    mkdir /opt
-fi
-dnf5 install -y /tmp/tabby.rpm
-mkdir -p /var/opt
-if [ -d /opt/Tabby ]; then
-    mv /opt/Tabby /var/opt/
-fi
-rm -rf /opt
-mv /opt.bak /opt
+#安装Ghosttty
+dnf5 install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
+dnf5 install -y ghostty
+
