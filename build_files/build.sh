@@ -80,4 +80,6 @@ yum install -y kubeadm kubectl
 
 #安装tabby
 TABBY_LATEST_URL=$(curl -s https://api.github.com/repos/Eugeny/tabby/releases/latest | jq -r '.assets[] | select(.name | endswith("linux-x64.rpm")) | .browser_download_url')
-curl -L "$TABBY_LATEST_URL" | dnf5 install -y /dev/stdin
+curl -L "$TABBY_LATEST_URL" -o /dev/shm/tabby.rpm
+dnf5 install -y /dev/shm/tabby.rpm
+rm -f /dev/shm/tabby.rpm
