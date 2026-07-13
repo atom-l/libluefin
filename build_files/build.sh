@@ -91,3 +91,11 @@ dnf5 install -y lazygit
 
 #安装Chezmoi
 dnf5 install -y chezmoi
+
+#安装resvg
+RESVGURL=$(curl -s https://api.github.com/repos/linebender/resvg/releases/latest | jq -r '.assets[] | select(.name | endswith("resvg-linux-x86_64.tar.gz")) | .browser_download_url' | tr -d '\n')
+USVGURL=$(curl -s https://api.github.com/repos/linebender/resvg/releases/latest | jq -r '.assets[] | select(.name | endswith("usvg-linux-x86_64.tar.gz")) | .browser_download_url' | tr -d '\n')
+curl -L "$RESVGURL" -o /tmp/resvg.tar.gz
+curl -L "$USVGURL" -o /tmp/usvg.tar.gz
+tar -zxvf /tmp/resvg.tar.gz -C /usr/bin/ && chmod +x /usr/bin/resvg
+tar -zxvf /tmp/usvg.tar.gz -C /usr/bin/ && chmod +x /usr/bin/resvg
