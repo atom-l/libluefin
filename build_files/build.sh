@@ -90,5 +90,4 @@ dnf5 install -y yazi
 dnf5 install -y lazygit
 
 #安装Chezmoi
-dnf5 install -y epel-release
 dnf5 install -y chezmoi
