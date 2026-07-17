@@ -99,3 +99,15 @@ curl -L "$RESVGURL" -o /tmp/resvg.tar.gz
 curl -L "$USVGURL" -o /tmp/usvg.tar.gz
 tar -zxvf /tmp/resvg.tar.gz -C /usr/bin/ && chmod +x /usr/bin/resvg
 tar -zxvf /tmp/usvg.tar.gz -C /usr/bin/ && chmod +x /usr/bin/resvg
+
+# Unreal Engine 运行时依赖                                                                                                                                                                                                        
+dnf5 -y install \                                                                                                                                                                                                                             
+    libnsl libnsl2 \                                                                                                                                                                                                                          
+    pulseaudio-libs alsa-plugins-pulseaudio pipewire-pulseaudio openal-soft libsndfile flac libogg libvorbis opus \                                                                                                                           
+    vulkan-loader vulkan-tools mesa-vulkan-drivers libglvnd mesa-libGL mesa-libEGL libdrm \                                                                                                                                                   
+    xorg-x11-server-Xwayland \                                                                                                                                                                                                                
+    libX11 libXau libXcb libXcursor libXext libXfixes libXi libXinerama libXrandr libXrender libXScrnSaver libXtst libXv libXxf86vm libXdmcp libXft libICE libSM \                                                                            
+    libxcb xcb-util xcb-util-image xcb-util-keysyms xcb-util-renderutil xcb-util-wm \                                                                                                                                                         
+    libxkbcommon libxkbcommon-x11 \                                                                                                                                                                                                           
+    fontconfig freetype xdg-utils \                                                                                                                                                                                                           
+    libcurl expat  
