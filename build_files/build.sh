@@ -78,10 +78,6 @@ EOF
 
 yum install -y kubeadm kubectl
 
-#安装Ghosttty
-dnf5 install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
-dnf5 install -y ghostty
-
 #安装Yazi
 dnf5 copr enable lihaohong/yazi
 dnf5 install -y yazi
