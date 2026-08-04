@@ -99,3 +99,7 @@ curl -L "$RESVGURL" -o /tmp/resvg.tar.gz
 curl -L "$USVGURL" -o /tmp/usvg.tar.gz
 tar -zxvf /tmp/resvg.tar.gz -C /usr/bin/ && chmod +x /usr/bin/resvg
 tar -zxvf /tmp/usvg.tar.gz -C /usr/bin/ && chmod +x /usr/bin/resvg
+
+#删除nano的默认编辑器设置
+rm -f /etc/profile.d/nano-default-editor.csh
+rm -f /etc/profile.d/nano-default-editor.sh
