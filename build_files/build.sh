@@ -107,4 +107,4 @@ rm -f /etc/profile.d/nano-default-editor.sh
 #安装witr
 WITRURL=$(curl -s https://api.github.com/repos/pranshuparmar/witr/releases/latest | jq -r '.assets[] | select(.name | endswith("linux-amd64.rpm")) | .browser_download_url' | tr -d '\n')
 curl -L "$WITRURL"2 -o /tmp/witr.rpm
-rpm -i /tmp/witr.rpm -y
+rpm -i /tmp/witr.rpm
