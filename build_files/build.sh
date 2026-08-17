@@ -13,11 +13,11 @@ cp -avf "/ctx/system_files"/. /
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/43/x86_64/repoview/index.html&protocol=https&redirect=1
 
 # this installs a package from fedora repos
-dnf5 install -y tmux
-dnf5 install -y jq
-dnf5 install -y yq
-dnf5 install -y papirus-icon-theme
-dnf5 install -y butane
+dnf5 -y install tmux
+dnf5 -y install jq
+dnf5 -y install yq
+dnf5 -y install papirus-icon-theme
+dnf5 -y install butane
 
 # Use a COPR Example:
 #
@@ -79,18 +79,18 @@ EOF
 yum install -y kubeadm kubectl
 
 #安装Ghosttty
-dnf5 install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
-dnf5 install -y ghostty
+dnf5 -y copr enable scottames/ghostty
+dnf5 -y install ghostty
 
 #安装Yazi
-dnf5 copr enable lihaohong/yazi
-dnf5 install -y yazi
+dnf5 -y copr enable lihaohong/yazi
+dnf5 -y install yazi
 
 #安装lazygit
-dnf5 install -y lazygit
+dnf5 -y install lazygit
 
 #安装Chezmoi
-dnf5 install -y chezmoi
+dnf5 -y install chezmoi
 
 #安装resvg
 RESVGURL=$(curl -s https://api.github.com/repos/linebender/resvg/releases/latest | jq -r '.assets[] | select(.name | endswith("resvg-linux-x86_64.tar.gz")) | .browser_download_url' | tr -d '\n')
