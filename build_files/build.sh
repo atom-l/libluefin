@@ -87,6 +87,7 @@ dnf5 -y copr enable lihaohong/yazi
 dnf5 -y install yazi
 
 #安装lazygit
+dnf5 -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
 dnf5 -y install lazygit
 
 #安装Chezmoi
