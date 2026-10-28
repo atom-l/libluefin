@@ -98,6 +98,18 @@ dnf5 -y install chezmoi
 dnf5 -y install gpaste
 dnf5 -y install gpaste-ui
 dnf5 -y install gnome-shell-extension-gpaste
+cat <<'EOF' >> /usr/share/glib-2.0/schemas/zz0-bluefin-modifications.gschema.override
+[org.gnome.GPaste]
+show-history='<Super>v'
+launch-ui='<Super><Shift>v'
+close-on-select=true
+max-history-size=500
+images-support=true
+EOF
+GPASTE_UUID="$(basename "$(find /usr/share/gnome-shell/extensions -maxdepth 1 -iname '*gpaste*' -type d | head -n1)")"
+test -n "$GPASTE_UUID"
+ZZ0=/usr/share/glib-2.0/schemas/zz0-bluefin-modifications.gschema.override
+grep -q "'$GPASTE_UUID'" "$ZZ0" || sed -i "s/^\(enabled-extensions = \[.*\)\][[:space:]]*$/\1, '$GPASTE_UUID']/" "$ZZ0"
 
 #安装resvg
 RESVGURL=$(curl -s https://api.github.com/repos/linebender/resvg/releases/latest | jq -r '.assets[] | select(.name | endswith("resvg-linux-x86_64.tar.gz")) | .browser_download_url' | tr -d '\n')
@@ -115,3 +127,6 @@ rm -f /etc/profile.d/nano-default-editor.sh
 WITRURL=$(curl -s https://api.github.com/repos/pranshuparmar/witr/releases/latest | jq -r '.assets[] | select(.name | endswith("linux-amd64.rpm")) | .browser_download_url' | tr -d '\n')
 curl -L "$WITRURL" -o /tmp/witr.rpm
 rpm -i /tmp/witr.rpm
+
+#编译gnome配置(注意要保持在本文件末尾)
+glib-compile-schemas /usr/share/glib-2.0/schemas
