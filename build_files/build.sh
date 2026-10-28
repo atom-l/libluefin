@@ -94,6 +94,11 @@ dnf5 -y install lazygit
 #安装Chezmoi
 dnf5 -y install chezmoi
 
+#安装GPaste
+dnf5 -y install gpaste
+dnf5 -y install gpaste-ui
+dnf5 -y install gnome-shell-extension-gpaste
+
 #安装resvg
 RESVGURL=$(curl -s https://api.github.com/repos/linebender/resvg/releases/latest | jq -r '.assets[] | select(.name | endswith("resvg-linux-x86_64.tar.gz")) | .browser_download_url' | tr -d '\n')
 USVGURL=$(curl -s https://api.github.com/repos/linebender/resvg/releases/latest | jq -r '.assets[] | select(.name | endswith("usvg-linux-x86_64.tar.gz")) | .browser_download_url' | tr -d '\n')
